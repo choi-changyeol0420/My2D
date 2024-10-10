@@ -25,6 +25,7 @@ namespace My2D
         {
             //플레이어 좌우 이동
             rb2D.velocity = new Vector2(inputMove.x * movespeed, rb2D.velocity.y);
+            //rb2D.velocity = new Vector2(inputMove.x * movespeed, inputMove.y * movespeed);
         }
         public void OnMove(InputAction.CallbackContext context)
         {
