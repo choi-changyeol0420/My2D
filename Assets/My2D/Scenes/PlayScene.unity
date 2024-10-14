@@ -16452,6 +16452,7 @@ GameObject:
   - component: {fileID: 2037843536}
   - component: {fileID: 2037843535}
   - component: {fileID: 2037843538}
+  - component: {fileID: 2037843539}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -16599,7 +16600,19 @@ MonoBehaviour:
     m_ActionId: 27d10449-e662-46a7-9856-716cbe57bf2d
     m_ActionName: Player/Look[/Mouse/delta]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2037843536}
+        m_TargetAssemblyTypeName: My2D.PlayerController, Assembly-CSharp
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 52c455bc-4c08-4f17-a017-7517fe7f4dde
     m_ActionName: Player/Attack[/Mouse/leftButton]
   - m_PersistentCalls:
@@ -16658,6 +16671,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: bbeae426-5da6-4714-bdaf-0e4b47102949
     m_ActionName: Player/Run[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2037843536}
+        m_TargetAssemblyTypeName: My2D.PlayerController, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 121ac29f-aa3c-4715-ba14-6bba8e110f48
+    m_ActionName: Player/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -16676,9 +16705,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movespeed: 4
+  runspeed: 8
+  airspeed: 2
   isMove: 0
   isRun: 0
   isFacingRight: 1
+  jumpForce: 7
 --- !u!70 &2037843537
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -16711,8 +16743,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0066043735, y: -0.1651063}
-  m_Size: {x: 0.5493418, y: 1.8966093}
+  m_Offset: {x: 0.0066043735, y: -0.16117644}
+  m_Size: {x: 0.5493418, y: 1.8887496}
   m_Direction: 0
 --- !u!95 &2037843538
 Animator:
@@ -16735,6 +16767,36 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2037843539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037843531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84d1aefc2f1e2fb4e892d444f972c9f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contactFilter:
+    useTriggers: 1
+    useLayerMask: 1
+    useDepth: 1
+    useOutsideDepth: 1
+    useNormalAngle: 1
+    useOutsideNormalAngle: 1
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  groundDistance: 0.05
+  ceilingDistance: 0.05
+  wallDistance: 0.2
+  isGround: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

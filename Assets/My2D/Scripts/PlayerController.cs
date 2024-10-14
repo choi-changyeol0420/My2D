@@ -8,16 +8,45 @@ namespace My2D
         #region Variables
         private Rigidbody2D rb2D;
         private Animator animator;
-        private SpriteRenderer sRenderer;
+        private TorchingDirections torchingDirections;
 
         //플레이어 걷기 속도
         [SerializeField]private float movespeed = 4f;
+        [SerializeField]private float runspeed = 8f;
+        [SerializeField]private float airspeed = 2f;
+
+        public float CurrentMoveSpeed
+        {
+            get 
+            {
+                if (IsMove && torchingDirections.IsWall)
+                {
+                    if (torchingDirections.IsGround == false)
+                    {
+                        if (isRun)
+                        {
+                            return runspeed;
+                        }
+                        else
+                        {
+                            return movespeed;
+                        }
+
+                    }
+                    else
+                    {
+                        return airspeed;
+                    }
+                }
+                else
+                {
+                    return 0;   //idle
+                }
+            }
+        }
 
         //플레이어 이동과 관련된 입력값
         private Vector2 inputMove;
-
-        //점프
-        private bool isjump = false;
 
         //걷기
         [SerializeField] private bool isMove = false;
@@ -47,52 +76,51 @@ namespace My2D
         [SerializeField] private bool isFacingRight = true;
         public bool IsFacingRight
         {
-            get { return IsFacingRight; }
+            get { return isFacingRight; }
             set 
             {
                 //반전
-                if (IsFacingRight != value)
+                if (isFacingRight != value)
                 {
                     transform.localScale *= new Vector2(-1, 1);
                 }
                 isFacingRight = value; 
             }
         }
+        //점프
+        [SerializeField]private float jumpForce = 5f;
         #endregion
 
         private void Awake()
         {
             //참조
-            rb2D = GetComponent<Rigidbody2D>();
+            rb2D = this.GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             //rb2D.velocity
         }
         private void FixedUpdate()
         {
             //플레이어 좌우 이동
-            rb2D.velocity = new Vector2(inputMove.x * movespeed, rb2D.velocity.y);
-            if (Input.GetKey(KeyCode.Space))
-            {
-                isjump = true;
-            }
-            Jump();
-            //rb2D.velocity = new Vector2(inputMove.x * movespeed, inputMove.y * movespeed);
+            rb2D.velocity = new Vector2(inputMove.x * CurrentMoveSpeed, rb2D.velocity.y);
+
+            //애니메이션 값
+            animator.SetFloat(AnimationString.Yvelocity, rb2D.velocity.y);
 
         }
         //바라보는 방향 전환
         void SetFacingDirection(Vector2 moveInput)
         {
-            if (moveInput.x < 0)
+            if (moveInput.x < 0 && IsFacingRight == true)
             {
                 //왼쪽으로 바라본다
-                //IsFacingRight = false;
-                transform.localScale = new Vector2(-1, 1);
+                IsFacingRight = false;
+                //transform.localScale = new Vector2(-1, 1);
             }
-            if (moveInput.x > 0)
+            if (moveInput.x > 0 && IsFacingRight == false)
             {
                 //오른쪽으로 바라본다
-                //IsFacingRight = true;
-                transform.localScale = new Vector2(1, 1);
+                IsFacingRight = true;
+                //transform.localScale = new Vector2(1, 1);
             }
         }
         public void OnMove(InputAction.CallbackContext context)
@@ -112,14 +140,22 @@ namespace My2D
             { 
                 IsRun = false;
             }
+            
         }
-        void Jump()
+        public void OnJump(InputAction.CallbackContext context)
         {
-            if(!isjump) { return; }
-            rb2D.velocity = Vector2.zero;
-            Vector2 jumpVelocity = new Vector2(0f, 5f);
-            rb2D.AddForce(jumpVelocity, ForceMode2D.Impulse);
-            isjump = false;
+            if (context.started && torchingDirections.IsGround)
+            {
+                animator.SetTrigger(AnimationString.JumpTrigger);
+                rb2D.velocity = new Vector2(rb2D.velocity.x, jumpForce);
+            }
+        }
+        public void OnAttack(InputAction.CallbackContext context)
+        {
+            if (context.started && torchingDirections.IsGround)
+            {
+                animator.SetTrigger(AnimationString.AttackTrigger);
+            }
         }
     }
 }

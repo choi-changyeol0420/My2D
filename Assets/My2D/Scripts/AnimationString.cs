@@ -8,6 +8,12 @@ namespace My2D
         #region Variables
         public static string IsMove = "IsMove";
         public static string IsRun = "IsRun";
+        public static string IsGround = "IsGround";
+        public static string IsCeiling = "IsCeiling";
+        public static string JumpTrigger = "JumpTrigger";
+        public static string Yvelocity = "Yvelocity";
+        public static string IsWall = "IsWall";
+        public static string AttackTrigger = "AttackTrigger";
         #endregion
     }
 }
