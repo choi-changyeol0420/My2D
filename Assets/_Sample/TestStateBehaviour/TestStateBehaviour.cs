@@ -7,26 +7,26 @@ public class TestStateBehaviour : StateMachineBehaviour
     // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //ìƒíƒœì— ë“¤ì–´ì˜¬ ë•Œ 1ë²ˆ í˜¸ì¶œ
+        //»óÅÂ¿¡ µé¾î¿Ã¶§ 1¹ø È£Ãâ
     }
 
     // OnStateUpdate is called before OnStateUpdate is called on any state inside this state machine
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //ìƒíƒœë¥¼ ìœ ì§€í•  ë•Œ
+        //»óÅÂ¸¦ À¯ÁöÇÒ¶§ °è¼Ó È£Ãâ
     }
 
     // OnStateExit is called before OnStateExit is called on any state inside this state machine
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //ìƒíƒœì— ë‚˜ê°ˆ ë•Œ 1ë²ˆ í˜¸ì¶œ
+        //»óÅÂ¸¦ ³ª°¥¶§ 1¹ø È£Ãâ
     }
 
     // OnStateMove is called before OnStateMove is called on any state inside this state machine
-    override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-       
-    }
+    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    //{
+    //    
+    //}
 
     // OnStateIK is called before OnStateIK is called on any state inside this state machine
     //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -37,12 +37,12 @@ public class TestStateBehaviour : StateMachineBehaviour
     // OnStateMachineEnter is called when entering a state machine via its Entry Node
     override public void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
     {
-        //ìƒíƒœ ë¨¸ì‹ ì— ë“¤ì–´ì˜¬ ë•Œ 1ë²ˆ í˜¸ì¶œ
+        //»óÅÂ ¸Ó½Å¿¡ µé¾î¿Ã¶§ 1¹ø È£Ãâ
     }
 
     // OnStateMachineExit is called when exiting a state machine via its Exit Node
     override public void OnStateMachineExit(Animator animator, int stateMachinePathHash)
     {
-        //ìƒíƒœ ë¨¸ì‹ ì— ë‚˜ê°ˆ ë•Œ 1ë²ˆ í˜¸ì¶œ
+        //»óÅÂ ¸Ó½ÅÀ» ³ª°¥¶§ 1¹ø È£Ãâ
     }
 }

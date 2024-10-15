@@ -1,24 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+//animator Bool형 파라미터를 제어하는 클래스
 namespace My2D
 {
     public class SetBoolBehaviour : StateMachineBehaviour
     {
         #region Variables
         public string boolName;
-        public bool updateOnstate;
-        public bool updateOnstateMachine;
-        public bool valueenter, valueexit;
-
+        public bool updateOnState;
+        public bool updateOnStateMachine;
+        public bool valueEnter, valueExit;
         #endregion
+
         // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            if (updateOnstate)
+            if(updateOnState)
             {
-                animator.SetBool(boolName, valueenter);
+                animator.SetBool(boolName, valueEnter);
             }
         }
 
@@ -31,10 +30,10 @@ namespace My2D
         // OnStateExit is called before OnStateExit is called on any state inside this state machine
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            if (updateOnstate)
+            if (updateOnState)
             {
-                animator.SetBool(boolName, valueexit);
-            }
+                animator.SetBool(boolName, valueExit);
+            }   
         }
 
         // OnStateMove is called before OnStateMove is called on any state inside this state machine
@@ -52,19 +51,19 @@ namespace My2D
         // OnStateMachineEnter is called when entering a state machine via its Entry Node
         override public void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
         {
-            if (updateOnstateMachine)
+            if (updateOnStateMachine)
             {
-                animator.SetBool(boolName, valueenter);
+                animator.SetBool(boolName, valueEnter);
             }
         }
 
         // OnStateMachineExit is called when exiting a state machine via its Exit Node
         override public void OnStateMachineExit(Animator animator, int stateMachinePathHash)
         {
-            if (updateOnstateMachine)
+            if (updateOnStateMachine)
             {
-                animator.SetBool(boolName, valueexit);
-            }
+                animator.SetBool(boolName, valueExit);
+            }   
         }
     }
 }

@@ -11,11 +11,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Player
+  - Enemy
+  - PlayerHitBox
+  - EnemyHitBox
   - 
   - 
   - 
@@ -43,6 +43,12 @@ TagManager:
     locked: 0
   - name: Tile
     uniqueID: 4147097733
+    locked: 0
+  - name: Enemy
+    uniqueID: 6935615
+    locked: 0
+  - name: Player
+    uniqueID: 3039534625
     locked: 0
   - name: Default
     uniqueID: 0
