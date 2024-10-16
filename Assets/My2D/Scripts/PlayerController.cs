@@ -10,7 +10,7 @@ namespace My2D
         private Animator animator;
         private TouchingDirections touchingDirections;
 
-        //ÇÃ·¹ÀÌ¾î ÀÌµ¿ ¼Óµµ
+        //í”Œë ˆì´ì–´ ì´ë™ ì†ë„
         [SerializeField] private float walkSpeed = 4f;
         [SerializeField] private float runSpeed = 8f;
         [SerializeField] private float airSpeed = 2f;
@@ -46,12 +46,12 @@ namespace My2D
                 }
                 else
                 {
-                    return 0f;  //¿òÁ÷ÀÌÁö ¸øÇÒ¶§
+                    return 0f;  //ì›€ì§ì´ì§€ ëª»í• ë•Œ
                 }
             }
         }
 
-        //ÀÌµ¿¿©ºÎ
+        //ì´ë™ì—¬ë¶€
         public bool CanMove
         {
             get
@@ -60,10 +60,10 @@ namespace My2D
             }
         }
 
-        //ÇÃ·¹ÀÌ¾î ÀÌµ¿°ú °ü·ÃµÈ ÀÔ·Â°ª
+        //í”Œë ˆì´ì–´ ì´ë™ê³¼ ê´€ë ¨ëœ ì…ë ¥ê°’
         private Vector2 inputMove;
 
-        //°È±â
+        //ê±·ê¸°
         [SerializeField] private bool isMove = false;
         public bool IsMove
         {
@@ -78,7 +78,7 @@ namespace My2D
             }
         }
 
-        //¶Ù±â
+        //ë›°ê¸°
         [SerializeField] private bool isRun = false;
         public bool IsRun
         {
@@ -93,7 +93,7 @@ namespace My2D
             }
         }
 
-        //ÁÂ¿ì ¹İÀü
+        //ì¢Œìš° ë°˜ì „
         [SerializeField] private bool isFacingRight = true;
         public bool IsFacingRight
         {
@@ -103,7 +103,7 @@ namespace My2D
             }
             set
             {
-                //¹İÀü
+                //ë°˜ì „
                 if (isFacingRight != value)
                 {
                     transform.localScale *= new Vector2(-1, 1);
@@ -112,13 +112,19 @@ namespace My2D
             }
         }
 
-        //Á¡ÇÁ
+        //ì í”„
         [SerializeField] private float jumpForce = 5f;
+
+        //ì£½ìŒ ì²´í¬
+        public bool IsDeath
+        {
+            get { return animator.GetBool(AnimationString.IsDeath); }
+        }
         #endregion
 
         private void Awake()
         {
-            //ÂüÁ¶
+            //ì°¸ì¡°
             rb2D = this.GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             touchingDirections = GetComponent<TouchingDirections>();
@@ -126,24 +132,24 @@ namespace My2D
 
         private void FixedUpdate()
         {
-            //ÇÃ·¹ÀÌ¾î ÁÂ¿ì ÀÌµ¿
+            //í”Œë ˆì´ì–´ ì¢Œìš° ì´ë™
             rb2D.velocity = new Vector2(inputMove.x * CurrentMoveSpeed, rb2D.velocity.y);
 
-            //¾Ö´Ï¸ŞÀÌ¼Ç °ª
+            //ì• ë‹ˆë©”ì´ì…˜ ê°’
             animator.SetFloat(AnimationString.YVelocity, rb2D.velocity.y);
         }
 
-        //¹Ù¶óº¸´Â ¹æÇâÀ» ÀüÈ¯
+        //ë°”ë¼ë³´ëŠ” ë°©í–¥ì„ ì „í™˜
         void SetFacingDirection(Vector2 moveInput)
         {
             if(moveInput.x > 0f && IsFacingRight == false)
             {
-                //¿À¸¥ÂÊÀ» ¹Ù¶óº»´Ù
+                //ì˜¤ë¥¸ìª½ì„ ë°”ë¼ë³¸ë‹¤
                 IsFacingRight = true;
             }
             else if (moveInput.x < 0f && IsFacingRight == true)
             {
-                //¿ŞÂÊÀ» ¹Ù¶óº»´Ù
+                //ì™¼ìª½ì„ ë°”ë¼ë³¸ë‹¤
                 IsFacingRight = false;
             }
         }
@@ -151,20 +157,27 @@ namespace My2D
         public void OnMove(InputAction.CallbackContext context)
         {
             inputMove = context.ReadValue<Vector2>();
-            IsMove = (inputMove != Vector2.zero);
+            if(!IsDeath)
+            {
+                IsMove = (inputMove != Vector2.zero);
 
-            //¹æÇâÀüÈ¯
-            SetFacingDirection(inputMove);
+                //ë°©í–¥ì „í™˜
+                SetFacingDirection(inputMove);
+            }
+            else
+            {
+                IsMove = false;
+            }
         }
 
         public void OnRun(InputAction.CallbackContext context)
         {
-            //´©¸£±â ½ÃÀÛÇÏ´Â ¼ø°£
+            //ëˆ„ë¥´ê¸° ì‹œì‘í•˜ëŠ” ìˆœê°„
             if(context.started)
             {
                 IsRun = true;
             }
-            else if(context.canceled)   //¸±¸®Áî ÇÏ´Â ¼ø°£
+            else if(context.canceled)   //ë¦´ë¦¬ì¦ˆ í•˜ëŠ” ìˆœê°„
             {
                 IsRun = false;
             }
@@ -172,7 +185,7 @@ namespace My2D
 
         public void OnJump(InputAction.CallbackContext context)
         {
-            //´©¸£±â ½ÃÀÛÇÏ´Â ¼ø°£, ÀÌÁß Á¡ÇÁ x
+            //ëˆ„ë¥´ê¸° ì‹œì‘í•˜ëŠ” ìˆœê°„, ì´ì¤‘ ì í”„ x
             if (context.started && touchingDirections.IsGround)
             {
                 animator.SetTrigger(AnimationString.JumpTrigger);
@@ -182,7 +195,7 @@ namespace My2D
 
         public void OnAttack(InputAction.CallbackContext context)
         {
-            //¸¶¿ì½º Å¬¸¯¼ø°£ ½ÃÀÛÇÏ´Â ¼ø°£
+            //ë§ˆìš°ìŠ¤ í´ë¦­ìˆœê°„ ì‹œì‘í•˜ëŠ” ìˆœê°„
             if (context.started && touchingDirections.IsGround)
             {
                 animator.SetTrigger(AnimationString.AttackTrigger);
