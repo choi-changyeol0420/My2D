@@ -8,7 +8,7 @@ namespace My2D
     {
         #region Variables
         //힐
-        private float restoreHealth = 20f;
+        [SerializeField]private float restoreHealth = 20f;
 
         [SerializeField]private Vector3 rotateSpeed = new Vector3(0f,180,0f);
         #endregion

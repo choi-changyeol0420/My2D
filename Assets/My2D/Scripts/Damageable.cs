@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -98,7 +95,9 @@ namespace My2D
             {
                 //무적모드 초기화
                 isInvincible = true;
-                
+
+                float beforeHealth = CurrentHealth;
+
                 CurrentHealth -= damage;
                 Debug.Log($"{transform.name}의 현재 체력은 {CurrentHealth}");
                 LockVelocity = true;
@@ -109,9 +108,11 @@ namespace My2D
                 {
                     hitAction.Invoke(damage, knocback);
                 }*/
-                hitAction?.Invoke(damage,knockback);
-                CharacterEvents.characterDamage?.Invoke(gameObject,damage);
 
+                //실제 힐 hp값
+                float realDamage = beforeHealth - CurrentHealth;
+                hitAction?.Invoke(damage,knockback);
+                CharacterEvents.characterDamage?.Invoke(gameObject, realDamage);
             }
             
         }
@@ -121,10 +122,14 @@ namespace My2D
             {
                 return false;
             }
+            //힐 전의 hp
+            float beforeHealth = CurrentHealth;
             CurrentHealth += amount;
             CurrentHealth = Mathf.Clamp(CurrentHealth, 0, Maxhealth);
+            //실제 힐 hp값
+            float realHealth = CurrentHealth - beforeHealth;
 
-            CharacterEvents.characterHealed?.Invoke(gameObject,amount);
+            CharacterEvents.characterHealed?.Invoke(gameObject,realHealth);
             return true;
         }
     }
