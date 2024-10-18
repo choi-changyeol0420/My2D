@@ -17,5 +17,6 @@ namespace My2D
         public static string HasTarget = "HasTarget";
         public static string HitTrigger = "HitTrigger";
         public static string IsDeath = "IsDeath";
+        public static string LockVelocity = "LockVelocity";
     }
 }

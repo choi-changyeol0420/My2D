@@ -25,7 +25,7 @@ namespace My2D
         {
             spriteRenderer = animator.GetComponent<SpriteRenderer>();
             startcolor = spriteRenderer.color;
-            removeObject =animator.gameObject;
+            removeObject = animator.gameObject;
 
             //초기화
             countdown = fadeTimer;
