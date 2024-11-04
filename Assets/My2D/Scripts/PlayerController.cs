@@ -15,7 +15,7 @@ namespace My2D
         [SerializeField] private float walkSpeed = 4f;
         [SerializeField] private float runSpeed = 8f;
         [SerializeField] private float airSpeed = 2f;
-
+        [SerializeField] private TrailEffect effect;
         public float CurrentMoveSpeed
         {
             get
@@ -129,6 +129,7 @@ namespace My2D
             rb2D = this.GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             touchingDirections = GetComponent<TouchingDirections>();
+            effect = GetComponent<TrailEffect>();
 
             damageable = GetComponent<Damageable>();
             damageable.hitAction += OnHit;          //UnityAction 델리게이트 함수에 등록
@@ -196,6 +197,12 @@ namespace My2D
             {
                 animator.SetTrigger(AnimationString.JumpTrigger);
                 rb2D.velocity = new Vector2(rb2D.velocity.x, jumpForce);
+
+                //
+                if(effect != null)
+                {
+                    effect.StartActiveTrail();
+                }
             }
         }
 
